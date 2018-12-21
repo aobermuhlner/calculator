@@ -44,13 +44,13 @@ public class CalculatorTest
     @Test(expected=AssertionError.class)
     public void testToBig1Add() {
         test = new Calculator();
-        assertEquals(2147483637, test.addition(2147483647, 50));
+        assertEquals(Integer.MAX_VALUE, test.addition(Integer.MAX_VALUE, 50));
     }
     
     @Test(expected=AssertionError.class)
     public void testToSmall1Add() {
         test = new Calculator();
-        assertEquals(-2147483637, test.addition(-2147483647, -10));
+        assertEquals(Integer.MIN_VALUE, test.addition(Integer.MIN_VALUE, -10));
     }
     
     @Test
@@ -93,13 +93,13 @@ public class CalculatorTest
     @Test(expected=AssertionError.class)
     public void testToBigSub() {
         test = new Calculator();
-        assertEquals(2147483637, test.subtraction(2147483647, -50));
+        assertEquals(2147483637, test.subtraction(Integer.MAX_VALUE, -50));
     }
     
     @Test(expected=AssertionError.class)
     public void testToSmallSub() {
         test = new Calculator();
-        assertEquals(-2147483637, test.subtraction(-2147483647, 10));
+        assertEquals(Integer.MIN_VALUE-10, test.subtraction(Integer.MIN_VALUE, 10));
     }
     
     @Test
@@ -151,12 +151,70 @@ public class CalculatorTest
         assertEquals(4, test.division(-20, -5));
     }
     
-    @Test
-    public void testBiggestNumberDiv() {
+    @Test(expected=ArithmeticException.class)
+    public void testDivideZeroByZero() {
         test = new Calculator();
-        assertEquals(2147483647, test.division(2147483647, 1));
+        assertEquals(0, test.division(0, 0));
     }
     
+    //multiplication tests
     
+
+    @Test
+    public void testSimpleMul1() {
+        test = new Calculator();
+        assertEquals(30, test.multiplication(10, 3));
+    }
     
+    @Test
+    public void testSimpleMul2() {
+        test = new Calculator();
+        assertEquals(30, test.multiplication(3, 10));
+    }
+    
+    @Test
+    public void testMulByZero() {
+        test = new Calculator();
+        assertEquals(0, test.multiplication(10, 0));
+    }
+    
+    @Test
+    public void testMulOneNegative() {
+        test = new Calculator();
+        assertEquals(-200, test.multiplication(10, -20));
+    }
+    
+    @Test
+    public void testMulTwoNegatives() {
+        test = new Calculator();
+        assertEquals(200, test.multiplication(-10, -20));
+    }
+
+    @Test(expected=AssertionError.class)
+    public void testToBigMul() {
+        test = new Calculator();
+        assertEquals(2*Integer.MAX_VALUE, test.subtraction(Integer.MAX_VALUE, 2));
+    }
+
+    @Test(expected=AssertionError.class)
+    public void testToSmallMul() {
+        test = new Calculator();
+        assertEquals(2*Integer.MIN_VALUE, test.subtraction(-Integer.MIN_VALUE, 2));
+    }
+
+    @Test
+    public void testmultiplyTwoZeroes() {
+        test = new Calculator();
+        assertEquals(0, test.subtraction(0, 0));
+    }
+    
+  
 }
+
+
+
+
+
+
+
+
